@@ -590,6 +590,14 @@ about the Fly platform.`,
 		return KeyStrings{"proxy <local:remote>", "Proxies connections to a fly app",
 			`Proxies connections to a fly app through the wireguard tunnel`,
 		}
+	case "recipes":
+		return KeyStrings{"recipes", "TBD",
+			`TBD`,
+		}
+	case "recipes.provision-postgres":
+		return KeyStrings{"provision-postgres", "provision postgres cluster",
+			`provision postgres cluster`,
+		}
 	case "regions":
 		return KeyStrings{"regions", "Manage regions",
 			`Configure the region placement rules for an application.`,

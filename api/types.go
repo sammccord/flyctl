@@ -196,6 +196,7 @@ type Query struct {
 	Machines struct {
 		Nodes []*Machine
 	}
+	Machine       *Machine
 	LaunchMachine struct {
 		Machine *Machine
 		App     *App

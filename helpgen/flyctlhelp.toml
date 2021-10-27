@@ -41,6 +41,15 @@ The update will perform a rolling restart against each VM, which may result in a
 shortHelp = "Updates the app's image to the latest available version. (Fly Postgres only)"
 usage = "update"
 
+[recipes]
+longHelp = "TBD"
+shortHelp = "TBD"
+usage = "recipes"
+[recipes.provision-postgres]
+longHelp = "provision postgres cluster"
+shortHelp = "provision postgres cluster"
+usage = "provision-postgres"
+
 [open]
 longHelp = """Open browser to current deployed application. If an optional path is specified, this is appended to the
 URL for deployed application.
