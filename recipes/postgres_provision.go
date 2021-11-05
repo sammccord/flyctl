@@ -1,6 +1,7 @@
 package recipes
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/superfly/flyctl/api"
@@ -10,7 +11,7 @@ import (
 
 type PostgresProvision struct {
 	Config PostgresProvisionConfig
-	ctx    *cmdctx.CmdContext
+	cmdCtx *cmdctx.CmdContext
 }
 
 type PostgresProvisionConfig struct {
@@ -26,16 +27,17 @@ type PostgresProvisionConfig struct {
 }
 
 func NewPostgresProvision(cmdCtx *cmdctx.CmdContext, config PostgresProvisionConfig) *PostgresProvision {
-	return &PostgresProvision{ctx: cmdCtx, Config: config}
+	return &PostgresProvision{cmdCtx: cmdCtx, Config: config}
 }
 
 func (p *PostgresProvision) Start() error {
+	ctx := p.cmdCtx.Command.Context()
 	app, err := p.createApp()
 	if err != nil {
 		return err
 	}
 
-	secrets, err := p.setSecrets()
+	secrets, err := p.setSecrets(ctx)
 	if err != nil {
 		return err
 	}
@@ -56,7 +58,7 @@ func (p *PostgresProvision) Start() error {
 			return err
 		}
 
-		if err = WaitForMachineState(p.ctx.Command.Context(), p.ctx.Client, p.Config.AppName, machine.ID, "started"); err != nil {
+		if err = WaitForMachineState(ctx, p.cmdCtx.Client, p.Config.AppName, machine.ID, "started"); err != nil {
 			return err
 		}
 	}
@@ -102,18 +104,24 @@ func (p *PostgresProvision) createApp() (*api.App, error) {
 		// TODO - We should use constants to reference this.
 		Runtime: "FIRECRACKER",
 	}
+<<<<<<< HEAD
 	return p.ctx.Client.API().CreateApp(p.ctx.Command.Context(), appInput)
+=======
+	return p.cmdCtx.Client.API().CreateApp(appInput)
+>>>>>>> 0808a8f... Messy, but progress
 }
 
-func (p *PostgresProvision) setSecrets() (map[string]string, error) {
+func (p *PostgresProvision) setSecrets(ctx context.Context) (map[string]string, error) {
 	fmt.Println("Setting secrets...")
 
 	secrets := map[string]string{
 		"FLY_APP_NAME":      p.Config.AppName, // TODO - Move this to web.
+		"FLY_REGION":        p.Config.Region,
 		"SU_PASSWORD":       GenerateSecureToken(15),
 		"REPL_PASSWORD":     GenerateSecureToken(15),
 		"OPERATOR_PASSWORD": GenerateSecureToken(15),
 	}
+	fmt.Printf("Secrets %+v", secrets)
 	if p.Config.Password != "" {
 		secrets["OPERATOR_PASSWORD"] = p.Config.Password
 	}
@@ -124,7 +132,11 @@ func (p *PostgresProvision) setSecrets() (map[string]string, error) {
 		secrets["ETCD_URL"] = p.Config.EtcdUrl
 	}
 
+<<<<<<< HEAD
 	_, err := p.ctx.Client.API().SetSecrets(p.ctx.Command.Context(), p.Config.AppName, secrets)
+=======
+	_, err := p.cmdCtx.Client.API().SetSecrets(ctx, p.Config.AppName, secrets)
+>>>>>>> 0808a8f... Messy, but progress
 
 	return secrets, err
 }

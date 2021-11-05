@@ -49,6 +49,10 @@ usage = "recipes"
 longHelp = "provision postgres cluster"
 shortHelp = "provision postgres cluster"
 usage = "provision-postgres"
+[recipes.rolling-reboot]
+longHelp = "provision postgres cluster"
+shortHelp = "provision postgres cluster"
+usage = "rolling-reboot"
 
 [open]
 longHelp = """Open browser to current deployed application. If an optional path is specified, this is appended to the

@@ -7,7 +7,12 @@ import (
 	"github.com/superfly/flyctl/cmdctx"
 	"github.com/superfly/flyctl/docstrings"
 	"github.com/superfly/flyctl/internal/client"
-	recipes "github.com/superfly/flyctl/recipes"
+	r "github.com/superfly/flyctl/internal/recipes"
+	"github.com/superfly/flyctl/recipes"
+)
+
+const (
+	STATE_FILE = ".flyd/bin/role.sh"
 )
 
 func newRecipesCommand(client *client.Client) *Command {
@@ -19,6 +24,7 @@ func newRecipesCommand(client *client.Client) *Command {
 	}, client)
 
 	newPostgresProvisionRecipeCommand(cmd, client)
+	newRollingRebootRecipeCommand(cmd, client)
 
 	return cmd
 }
@@ -36,6 +42,70 @@ func newPostgresProvisionRecipeCommand(parent *Command, client *client.Client) *
 	cmd.AddStringFlag(StringFlagOpts{Name: "etcd-url", Description: "Opt into using an existing etcd as the backend store by specifying the target etcd url."})
 
 	return cmd
+}
+
+func newRollingRebootRecipeCommand(parent *Command, client *client.Client) *Command {
+	keystrings := docstrings.Get("recipes.rolling-reboot")
+	cmd := BuildCommandKS(parent, runRollingRebootRecipe, keystrings, client, requireSession, requireAppName)
+
+	return cmd
+}
+
+func runRollingRebootRecipe(cmdCtx *cmdctx.CmdContext) error {
+	ctx := cmdCtx.Command.Context()
+	client := cmdCtx.Client.API()
+
+	app, err := client.GetApp(cmdCtx.AppName)
+	if err != nil {
+		return fmt.Errorf("get app: %w", err)
+	}
+
+	// Recipe prepares the agent, client, dialer, etc.
+	recipe, err := r.NewRecipe(ctx, app)
+	if err != nil {
+		return err
+	}
+	recipe.BuildTunnel()
+
+	roleMap := map[string][]string{}
+
+	instances, err := recipe.Agent.Instances(ctx, &app.Organization, app.Name)
+	stateOperations, err := recipe.RunOperation(instances.Addresses, ".flyd/bin/role")
+	if err != nil {
+		return err
+	}
+
+	for _, stateOp := range stateOperations {
+		roleMap[stateOp.Result] = append(roleMap[stateOp.Result], stateOp.Addr)
+	}
+
+	fmt.Println("\nReplica reboot results")
+	_, err = recipe.RunOperation(roleMap["replica"], ".flyd/bin/restart")
+	if err != nil {
+		return err
+	}
+	// for _, rOp := range replicaRebootOps {
+	// 	fmt.Printf("Result - Target: %s, Stdout: %q, Stderr: %q\n", rOp.Addr, rOp.Result, rOp.ErrorMessage)
+	// }
+
+	fmt.Println("\nLeader stepdown results")
+	stepDownOps, err := recipe.RunOperation(roleMap["leader"], ".flyd/bin/trigger-failover")
+	if err != nil {
+		return err
+	}
+	for _, sOp := range stepDownOps {
+		fmt.Printf("Result - Target: %s, Stdout: %q, Stderr: %q\n", sOp.Addr, sOp.Result, sOp.ErrorMessage)
+	}
+
+	fmt.Println("\nLeader reboot results")
+	leaderRebootOp, err := recipe.RunOperation(roleMap["leader"], ".flyd/bin/restart")
+	if err != nil {
+		return err
+	}
+	for _, lOp := range leaderRebootOp {
+		fmt.Printf("Result - Target: %s, Stdout: %q, Stderr: %q\n", lOp.Addr, lOp.Result, lOp.ErrorMessage)
+	}
+	return nil
 }
 
 func runProvisionPostgresRecipe(cmdCtx *cmdctx.CmdContext) error {
