@@ -25,23 +25,28 @@ func NewRecipe(ctx context.Context, app *api.App) (*Recipe, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "can't establish agent")
 	}
-
 	dialer, err := agentclient.Dialer(ctx, &app.Organization)
 	if err != nil {
 		return nil, fmt.Errorf("ssh: can't build tunnel for %s: %s\n", app.Organization.Slug, err)
 	}
 
-	return &Recipe{
+	recipe := &Recipe{
 		Ctx:    ctx,
 		Client: client,
 		Agent:  agentclient,
 		Dialer: &dialer,
 		App:    app,
-	}, nil
+	}
+
+	if err = recipe.buildTunnel(); err != nil {
+		return recipe, err
+	}
+
+	return recipe, nil
 }
 
 // Helper for building tunnel
-func (r *Recipe) BuildTunnel() error {
+func (r *Recipe) buildTunnel() error {
 	r.Client.IO.StartProgressIndicatorMsg("Connecting to tunnel")
 	if err := r.Agent.WaitForTunnel(r.Ctx, &r.App.Organization); err != nil {
 		return errors.Wrapf(err, "tunnel unavailable")
@@ -53,6 +58,7 @@ func (r *Recipe) BuildTunnel() error {
 
 func (r *Recipe) RunOperation(addrs []string, command string) ([]*RecipeOperation, error) {
 	var operations []*RecipeOperation
+
 	for _, addr := range addrs {
 		fmt.Printf("Running %q against %s...\n", command, addr)
 		op := NewRecipeOperation(r, addr, command)
@@ -61,7 +67,7 @@ func (r *Recipe) RunOperation(addrs []string, command string) ([]*RecipeOperatio
 		}
 		operations = append(operations, op)
 		if op.ErrorMessage != "" {
-			fmt.Printf("\n %s", op.ErrorMessage)
+			return nil, fmt.Errorf("%q on %s failed with %s", op.Command, op.Addr, op.ErrorMessage)
 		}
 	}
 	return operations, nil

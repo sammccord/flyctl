@@ -9,7 +9,7 @@ import (
 	"github.com/superfly/flyctl/flyctl"
 )
 
-type PostgresProvision struct {
+type PostgresProvisionRecipe struct {
 	Config PostgresProvisionConfig
 	cmdCtx *cmdctx.CmdContext
 }
@@ -26,11 +26,11 @@ type PostgresProvisionConfig struct {
 	VolumeSize   int
 }
 
-func NewPostgresProvision(cmdCtx *cmdctx.CmdContext, config PostgresProvisionConfig) *PostgresProvision {
-	return &PostgresProvision{cmdCtx: cmdCtx, Config: config}
+func NewPostgresProvisionRecipe(cmdCtx *cmdctx.CmdContext, config PostgresProvisionConfig) *PostgresProvisionRecipe {
+	return &PostgresProvisionRecipe{cmdCtx: cmdCtx, Config: config}
 }
 
-func (p *PostgresProvision) Start() error {
+func (p *PostgresProvisionRecipe) Start() error {
 	ctx := p.cmdCtx.Command.Context()
 	app, err := p.createApp()
 	if err != nil {
@@ -67,7 +67,7 @@ func (p *PostgresProvision) Start() error {
 	return err
 }
 
-func (p *PostgresProvision) configurePostgres() api.MachineConfig {
+func (p *PostgresProvisionRecipe) configurePostgres() api.MachineConfig {
 	machineConfig := flyctl.NewMachineConfig()
 
 	// Set env
@@ -95,7 +95,7 @@ func (p *PostgresProvision) configurePostgres() api.MachineConfig {
 	return api.MachineConfig(machineConfig.Config)
 }
 
-func (p *PostgresProvision) createApp() (*api.App, error) {
+func (p *PostgresProvisionRecipe) createApp() (*api.App, error) {
 	fmt.Println("Creating app...")
 	appInput := api.CreateAppInput{
 		OrganizationID:  p.Config.Organization.ID,
@@ -111,7 +111,7 @@ func (p *PostgresProvision) createApp() (*api.App, error) {
 >>>>>>> 0808a8f... Messy, but progress
 }
 
-func (p *PostgresProvision) setSecrets(ctx context.Context) (map[string]string, error) {
+func (p *PostgresProvisionRecipe) setSecrets(ctx context.Context) (map[string]string, error) {
 	fmt.Println("Setting secrets...")
 
 	secrets := map[string]string{
