@@ -54,6 +54,11 @@ longHelp = "provision postgres cluster"
 shortHelp = "provision postgres cluster"
 usage = "rolling-reboot"
 
+[recipes.rolling-upgrade]
+longHelp = "Upgrade postgres cluster"
+shortHelp = "Upgrade postgres cluster"
+usage = "rolling-upgrade"
+
 [open]
 longHelp = """Open browser to current deployed application. If an optional path is specified, this is appended to the
 URL for deployed application.

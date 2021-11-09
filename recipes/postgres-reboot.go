@@ -7,20 +7,15 @@ import (
 	"github.com/superfly/flyctl/internal/recipes"
 )
 
-const (
-	ROLE_SCRIPT     = ".flyd/bin/role"
-	RESTART_SCRIPT  = ".flyd/bin/restart"
-	FAILOVER_SCRIPT = ".flyd/bin/trigger-failover"
-)
-
 func PostgresRebootRecipe(ctx context.Context, app *api.App) error {
 
 	recipe, err := recipes.NewRecipe(ctx, app)
 	if err != nil {
 		return err
 	}
+
 	instances, err := recipe.Agent.Instances(ctx, &app.Organization, app.Name)
-	stateOperations, err := recipe.RunOperation(instances.Addresses, ROLE_SCRIPT)
+	stateOperations, err := recipe.RunOperation(instances.Addresses, ".flyd/bin/role")
 	if err != nil {
 		return err
 	}
@@ -30,17 +25,17 @@ func PostgresRebootRecipe(ctx context.Context, app *api.App) error {
 		roleMap[stateOp.Result] = append(roleMap[stateOp.Result], stateOp.Addr)
 	}
 
-	_, err = recipe.RunOperation(roleMap["replica"], RESTART_SCRIPT)
+	_, err = recipe.RunOperation(roleMap["replica"], ".flyd/bin/restart")
 	if err != nil {
 		return err
 	}
 
-	_, err = recipe.RunOperation(roleMap["leader"], FAILOVER_SCRIPT)
+	_, err = recipe.RunOperation(roleMap["leader"], ".flyd/bin/trigger-failover")
 	if err != nil {
 		return err
 	}
 
-	_, err = recipe.RunOperation(roleMap["leader"], RESTART_SCRIPT)
+	_, err = recipe.RunOperation(roleMap["leader"], ".flyd/bin/restart")
 	if err != nil {
 		return err
 	}

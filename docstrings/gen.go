@@ -602,6 +602,10 @@ about the Fly platform.`,
 		return KeyStrings{"rolling-reboot", "provision postgres cluster",
 			`provision postgres cluster`,
 		}
+	case "recipes.rolling-upgrade":
+		return KeyStrings{"rolling-upgrade", "Upgrade postgres cluster",
+			`Upgrade postgres cluster`,
+		}
 	case "regions":
 		return KeyStrings{"regions", "Manage regions",
 			`Configure the region placement rules for an application.`,
