@@ -6,16 +6,17 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/superfly/flyctl/api"
+	"github.com/superfly/flyctl/flyctl"
 	"github.com/superfly/flyctl/internal/client"
 	"github.com/superfly/flyctl/pkg/agent"
 )
 
 type Recipe struct {
-	Agent  *agent.Client
-	App    *api.App
-	Client *client.Client
-	Ctx    context.Context
-	Dialer *agent.Dialer
+	Agent     *agent.Client
+	App       *api.App
+	Client    *client.Client
+	Dialer    *agent.Dialer
+	AuthToken string
 }
 
 func NewRecipe(ctx context.Context, app *api.App) (*Recipe, error) {
@@ -30,15 +31,17 @@ func NewRecipe(ctx context.Context, app *api.App) (*Recipe, error) {
 		return nil, fmt.Errorf("ssh: can't build tunnel for %s: %s\n", app.Organization.Slug, err)
 	}
 
+	authToken := flyctl.GetAPIToken()
+
 	recipe := &Recipe{
-		Ctx:    ctx,
-		Client: client,
-		Agent:  agentclient,
-		Dialer: &dialer,
-		App:    app,
+		Client:    client,
+		Agent:     agentclient,
+		Dialer:    &dialer,
+		App:       app,
+		AuthToken: authToken,
 	}
 
-	if err = recipe.buildTunnel(); err != nil {
+	if err = recipe.buildTunnel(ctx); err != nil {
 		return recipe, err
 	}
 
@@ -46,9 +49,9 @@ func NewRecipe(ctx context.Context, app *api.App) (*Recipe, error) {
 }
 
 // Helper for building tunnel
-func (r *Recipe) buildTunnel() error {
+func (r *Recipe) buildTunnel(ctx context.Context) error {
 	r.Client.IO.StartProgressIndicatorMsg("Connecting to tunnel")
-	if err := r.Agent.WaitForTunnel(r.Ctx, &r.App.Organization); err != nil {
+	if err := r.Agent.WaitForTunnel(ctx, &r.App.Organization); err != nil {
 		return errors.Wrapf(err, "tunnel unavailable")
 	}
 	r.Client.IO.StopProgressIndicator()
@@ -56,19 +59,22 @@ func (r *Recipe) buildTunnel() error {
 	return nil
 }
 
-func (r *Recipe) RunOperation(addrs []string, command string) ([]*RecipeOperation, error) {
-	var operations []*RecipeOperation
-
-	for _, addr := range addrs {
-		fmt.Printf("Running %q against %s...\n", command, addr)
-		op := NewRecipeOperation(r, addr, command)
-		if err := op.Run(r.Ctx); err != nil {
-			return nil, err
-		}
-		operations = append(operations, op)
-		if op.ErrorMessage != "" {
-			return nil, fmt.Errorf("%q on %s failed with %s", op.Command, op.Addr, op.ErrorMessage)
-		}
+func (r *Recipe) RunHTTPOperation(ctx context.Context, machine *api.Machine, method, endpoint string) (*RecipeOperation, error) {
+	op := NewRecipeOperation(r, machine, "")
+	if err := op.RunHTTPCommand(ctx, method, endpoint); err != nil {
+		return nil, err
 	}
-	return operations, nil
+
+	return op, nil
+}
+
+func (r *Recipe) RunSSHOperation(ctx context.Context, machine *api.Machine, command string) (*RecipeOperation, error) {
+
+	fmt.Printf("Running %q against %s...\n", command, machine.ID)
+	op := NewRecipeOperation(r, machine, command)
+	if err := op.RunSSHCommand(ctx); err != nil {
+		return nil, err
+	}
+
+	return op, nil
 }

@@ -64,7 +64,7 @@ func runRollingUpgradeRecipe(cmdCtx *cmdctx.CmdContext) error {
 	ctx := cmdCtx.Command.Context()
 	client := cmdCtx.Client.API()
 
-	app, err := client.GetApp(cmdCtx.AppName)
+	app, err := client.GetApp(ctx, cmdCtx.AppName)
 	if err != nil {
 		return fmt.Errorf("get app: %w", err)
 	}
@@ -81,7 +81,7 @@ func runRollingRebootRecipe(cmdCtx *cmdctx.CmdContext) error {
 	ctx := cmdCtx.Command.Context()
 	client := cmdCtx.Client.API()
 
-	app, err := client.GetApp(cmdCtx.AppName)
+	app, err := client.GetApp(ctx, cmdCtx.AppName)
 	if err != nil {
 		return fmt.Errorf("get app: %w", err)
 	}

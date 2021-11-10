@@ -53,7 +53,7 @@ func (p *PostgresProvisionRecipe) Start() error {
 			Config: &machineConf,
 		}
 
-		machine, _, err := p.ctx.Client.API().LaunchMachine(p.ctx.Command.Context(), launchInput)
+		machine, _, err := p.cmdCtx.Client.API().LaunchMachine(ctx, launchInput)
 		if err != nil {
 			return err
 		}
@@ -104,11 +104,7 @@ func (p *PostgresProvisionRecipe) createApp() (*api.App, error) {
 		// TODO - We should use constants to reference this.
 		Runtime: "FIRECRACKER",
 	}
-<<<<<<< HEAD
-	return p.ctx.Client.API().CreateApp(p.ctx.Command.Context(), appInput)
-=======
-	return p.cmdCtx.Client.API().CreateApp(appInput)
->>>>>>> 0808a8f... Messy, but progress
+	return p.cmdCtx.Client.API().CreateApp(p.cmdCtx.Command.Context(), appInput)
 }
 
 func (p *PostgresProvisionRecipe) setSecrets(ctx context.Context) (map[string]string, error) {
@@ -132,11 +128,7 @@ func (p *PostgresProvisionRecipe) setSecrets(ctx context.Context) (map[string]st
 		secrets["ETCD_URL"] = p.Config.EtcdUrl
 	}
 
-<<<<<<< HEAD
-	_, err := p.ctx.Client.API().SetSecrets(p.ctx.Command.Context(), p.Config.AppName, secrets)
-=======
 	_, err := p.cmdCtx.Client.API().SetSecrets(ctx, p.Config.AppName, secrets)
->>>>>>> 0808a8f... Messy, but progress
 
 	return secrets, err
 }
