@@ -20,7 +20,7 @@ func PostgresRebootRecipe(ctx context.Context, app *api.App) error {
 		fmt.Println(err.Error())
 	}
 
-	var roleMap map[string][]*api.Machine
+	roleMap := map[string][]*api.Machine{}
 
 	// Collect PG role information from each machine
 	for _, machine := range machines {

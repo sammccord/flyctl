@@ -3,6 +3,7 @@ package recipes
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net"
@@ -21,14 +22,25 @@ type RecipeOperation struct {
 	ErrorMessage string
 }
 
+type MachineHTTPResponse struct {
+	Status string                  `json:"status"`
+	Data   MachineHTTPDataResponse `json:"data"`
+}
+
+type MachineHTTPDataResponse struct {
+	OK    bool   `json:"ok"`
+	Error string `json:"error"`
+}
+
 func NewRecipeOperation(recipe *Recipe, machine *api.Machine, command string) *RecipeOperation {
 	return &RecipeOperation{Machine: machine, Command: command, Recipe: recipe}
 }
 
 func (o *RecipeOperation) RunHTTPCommand(ctx context.Context, method, endpoint string) error {
 	baseUri := fmt.Sprintf("http://%s:%s@[%s]:4280", o.Recipe.App.Name, o.Recipe.AuthToken, o.MachineIP())
-	targetEndpoint := fmt.Sprintf("%s/%s", baseUri, endpoint)
+	targetEndpoint := fmt.Sprintf("%s%s", baseUri, endpoint)
 
+	fmt.Printf("Running %s %s\n", method, endpoint)
 	req, err := http.NewRequest(method, targetEndpoint, nil)
 	if err != nil {
 		return err
@@ -45,8 +57,15 @@ func (o *RecipeOperation) RunHTTPCommand(ctx context.Context, method, endpoint s
 		return err
 	}
 
-	// TODO - Parse response to resolve any errors.
-	o.Result = string(b)
+	var machineResp MachineHTTPResponse
+	if err = json.Unmarshal(b, &machineResp); err != nil {
+		return err
+	}
+
+	o.Result = machineResp.Status
+	o.ErrorMessage = machineResp.Data.Error
+
+	fmt.Printf("%s %s - Result: %s\n", method, endpoint, o.Result)
 
 	return nil
 }

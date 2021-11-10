@@ -21,15 +21,13 @@ func PostgresUpgradeRecipe(ctx context.Context, app *api.App, image string) erro
 		return err
 	}
 
-	// Fetch machines
-	machines, err := recipe.Client.API().ListMachines(ctx, app.Name, "")
+	machines, err := recipe.Client.API().ListMachines(ctx, app.Name, "started")
 	if err != nil {
 		return err
 	}
 
-	var roleMap map[string][]*api.Machine
-
 	// Collect PG role information from each machine
+	roleMap := map[string][]*api.Machine{}
 	for _, machine := range machines {
 		stateOp, err := recipe.RunSSHOperation(ctx, machine, PG_ROLE_SCRIPT)
 		if err != nil {
@@ -38,21 +36,41 @@ func PostgresUpgradeRecipe(ctx context.Context, app *api.App, image string) erro
 		roleMap[stateOp.Result] = append(roleMap[stateOp.Result], stateOp.Machine)
 	}
 
-	// Stop Replica/Launch new machine with  new image to replace it.
+	// Destroy replica and replace it with new machine w/ desired image.
 	for _, machine := range roleMap["replica"] {
-		if err = replaceMachine(ctx, recipe, app, machine); err != nil {
+		if err = destroyMachine(ctx, recipe, machine); err != nil {
+			return err
+		}
+
+		newMachine, err := replaceMachine(ctx, recipe, app, machine, image)
+		if err != nil {
+			return err
+		}
+
+		_, err = recipe.RunSSHOperation(ctx, newMachine, PG_IS_HEALTHY_SCRIPT)
+		if err != nil {
 			return err
 		}
 	}
 
-	// Trigger failover and replace old leader.
+	// Initiate failover, destroy old leader and replace it.
 	for _, machine := range roleMap["leader"] {
 		_, err = recipe.RunSSHOperation(ctx, machine, PG_FAILOVER_SCRIPT)
 		if err != nil {
 			return err
 		}
 
-		if err = replaceMachine(ctx, recipe, app, machine); err != nil {
+		if err = destroyMachine(ctx, recipe, machine); err != nil {
+			return err
+		}
+
+		newMachine, err := replaceMachine(ctx, recipe, app, machine, image)
+		if err != nil {
+			return err
+		}
+
+		_, err = recipe.RunSSHOperation(ctx, newMachine, PG_IS_HEALTHY_SCRIPT)
+		if err != nil {
 			return err
 		}
 	}
@@ -60,8 +78,7 @@ func PostgresUpgradeRecipe(ctx context.Context, app *api.App, image string) erro
 	return nil
 }
 
-func replaceMachine(ctx context.Context, recipe *recipes.Recipe, app *api.App, machine *api.Machine) error {
-
+func destroyMachine(ctx context.Context, recipe *recipes.Recipe, machine *api.Machine) error {
 	stopEndpoint := fmt.Sprintf("/v1/machines/%s/stop", machine.ID)
 	_, err := recipe.RunHTTPOperation(ctx, machine, http.MethodPost, stopEndpoint)
 	if err != nil {
@@ -74,8 +91,12 @@ func replaceMachine(ctx context.Context, recipe *recipes.Recipe, app *api.App, m
 		return err
 	}
 
+	return nil
+}
+
+func replaceMachine(ctx context.Context, recipe *recipes.Recipe, app *api.App, machine *api.Machine, image string) (*api.Machine, error) {
 	newConfig := machine.Config
-	newConfig["image"] = "flyio/postgres:14"
+	newConfig["image"] = image
 
 	launchInput := api.LaunchMachineInput{
 		AppID:  app.ID,
@@ -87,10 +108,10 @@ func replaceMachine(ctx context.Context, recipe *recipes.Recipe, app *api.App, m
 
 	m, _, err := recipe.Client.API().LaunchMachine(ctx, launchInput)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	WaitForMachineState(ctx, recipe.Client, app.ID, m.ID, "started")
 
-	return nil
+	return m, nil
 }
