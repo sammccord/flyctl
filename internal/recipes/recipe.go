@@ -69,12 +69,10 @@ func (r *Recipe) RunHTTPOperation(ctx context.Context, machine *api.Machine, met
 }
 
 func (r *Recipe) RunSSHOperation(ctx context.Context, machine *api.Machine, command string) (*RecipeOperation, error) {
-
-	fmt.Printf("Running %q against %s... ", command, machine.ID)
 	op := NewRecipeOperation(r, machine, command)
 	if err := op.RunSSHCommand(ctx); err != nil {
 		return nil, err
 	}
-	fmt.Printf("Result %s\n", op.Result)
+
 	return op, nil
 }

@@ -28,7 +28,7 @@ func PostgresRebootRecipe(ctx context.Context, app *api.App) error {
 		if err != nil {
 			return err
 		}
-		roleMap[stateOp.Result] = append(roleMap[stateOp.Result], stateOp.Machine)
+		roleMap[stateOp.Message] = append(roleMap[stateOp.Message], stateOp.Machine)
 	}
 
 	// Restart replicas

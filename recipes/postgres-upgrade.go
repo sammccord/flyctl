@@ -33,7 +33,7 @@ func PostgresUpgradeRecipe(ctx context.Context, app *api.App, image string) erro
 		if err != nil {
 			return err
 		}
-		roleMap[stateOp.Result] = append(roleMap[stateOp.Result], stateOp.Machine)
+		roleMap[stateOp.Message] = append(roleMap[stateOp.Message], stateOp.Machine)
 	}
 
 	// Destroy replica and replace it with new machine w/ desired image.

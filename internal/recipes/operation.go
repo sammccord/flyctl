@@ -8,7 +8,6 @@ import (
 	"io"
 	"net"
 	"net/http"
-	"strings"
 
 	"github.com/docker/docker/pkg/ioutils"
 	"github.com/superfly/flyctl/api"
@@ -18,18 +17,19 @@ type RecipeOperation struct {
 	Recipe       *Recipe
 	Machine      *api.Machine
 	Command      string
-	Result       string
-	ErrorMessage string
+	ResultStatus string
+	Message      string
+	Error        string
 }
 
-type MachineHTTPResponse struct {
-	Status string                  `json:"status"`
-	Data   MachineHTTPDataResponse `json:"data"`
+type MachineResponse struct {
+	Status string              `json:"status"`
+	Data   MachineDataResponse `json:"data"`
 }
-
-type MachineHTTPDataResponse struct {
-	OK    bool   `json:"ok"`
-	Error string `json:"error"`
+type MachineDataResponse struct {
+	OK      bool   `json:"ok"`
+	Message string `json:"message"`
+	Error   string `json:"error"`
 }
 
 func NewRecipeOperation(recipe *Recipe, machine *api.Machine, command string) *RecipeOperation {
@@ -40,7 +40,7 @@ func (o *RecipeOperation) RunHTTPCommand(ctx context.Context, method, endpoint s
 	baseUri := fmt.Sprintf("http://%s:%s@[%s]:4280", o.Recipe.App.Name, o.Recipe.AuthToken, o.MachineIP())
 	targetEndpoint := fmt.Sprintf("%s%s", baseUri, endpoint)
 
-	fmt.Printf("Running %s %s\n", method, endpoint)
+	fmt.Printf("Running %s %s... ", method, endpoint)
 	req, err := http.NewRequest(method, targetEndpoint, nil)
 	if err != nil {
 		return err
@@ -57,15 +57,16 @@ func (o *RecipeOperation) RunHTTPCommand(ctx context.Context, method, endpoint s
 		return err
 	}
 
-	var machineResp MachineHTTPResponse
+	var machineResp MachineResponse
 	if err = json.Unmarshal(b, &machineResp); err != nil {
 		return err
 	}
 
-	o.Result = machineResp.Status
-	o.ErrorMessage = machineResp.Data.Error
+	o.ResultStatus = machineResp.Status
+	o.Message = machineResp.Data.Message
+	o.Error = machineResp.Data.Error
 
-	fmt.Printf("%s %s - Result: %s\n", method, endpoint, o.Result)
+	o.printResponse()
 
 	return nil
 }
@@ -78,8 +79,9 @@ func (o *RecipeOperation) RunSSHCommand(ctx context.Context) error {
 	stderrWriter := ioutils.NewWriteCloserWrapper(&errBuf, func() error { return nil })
 	inReader := ioutils.NewReadCloserWrapper(&inBuf, func() error { return nil })
 
-	formattedAddr := fmt.Sprintf("[%s]", o.Addr())
+	fmt.Printf("Running %q against %s... ", o.Command, o.Machine.ID)
 
+	formattedAddr := fmt.Sprintf("[%s]", o.Addr())
 	err := sshConnect(&SSHParams{
 		Ctx:       ctx,
 		Org:       &o.Recipe.App.Organization,
@@ -91,15 +93,20 @@ func (o *RecipeOperation) RunSSHCommand(ctx context.Context) error {
 		Stdout:    stdoutWriter,
 		Stderr:    stderrWriter,
 	}, formattedAddr)
-
 	if err != nil {
-		o.ErrorMessage = err.Error()
 		return err
 	}
 
-	o.Result = strings.TrimSuffix(outBuf.String(), "\r\n")
-	o.Result = strings.Trim(o.Result, "\"")
-	o.ErrorMessage = errBuf.String()
+	var machineResp MachineResponse
+	if err = json.Unmarshal(outBuf.Bytes(), &machineResp); err != nil {
+		return err
+	}
+
+	o.ResultStatus = machineResp.Status
+	o.Message = machineResp.Data.Message
+	o.Error = machineResp.Data.Error
+
+	o.printResponse()
 
 	return nil
 }
@@ -115,4 +122,16 @@ func (o *RecipeOperation) MachineIP() string {
 	natsIPBytes[15] = 3
 
 	return net.IP(natsIPBytes[:]).String()
+}
+
+func (o *RecipeOperation) printResponse() {
+	if o.ResultStatus == "success" {
+		if o.Message == "" {
+			fmt.Printf("%s\n", o.ResultStatus)
+		} else {
+			fmt.Printf("%s - %q\n", o.ResultStatus, o.Message)
+		}
+	} else {
+		fmt.Printf("%s - %q\n", o.ResultStatus, o.Error)
+	}
 }

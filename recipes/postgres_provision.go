@@ -117,7 +117,6 @@ func (p *PostgresProvisionRecipe) setSecrets(ctx context.Context) (map[string]st
 		"REPL_PASSWORD":     GenerateSecureToken(15),
 		"OPERATOR_PASSWORD": GenerateSecureToken(15),
 	}
-	fmt.Printf("Secrets %+v", secrets)
 	if p.Config.Password != "" {
 		secrets["OPERATOR_PASSWORD"] = p.Config.Password
 	}
