@@ -15,7 +15,6 @@ type PostgresUpgradeConfig struct {
 }
 
 func PostgresImageUpgradeRecipe(ctx context.Context, app *api.App, image string) error {
-
 	recipe, err := recipe.NewRecipe(ctx, app)
 	if err != nil {
 		return err
@@ -37,6 +36,10 @@ func PostgresImageUpgradeRecipe(ctx context.Context, app *api.App, image string)
 		}
 		roleMap[stateOp.Message] = append(roleMap[stateOp.Message], stateOp.Machine)
 	}
+
+	// Use a non-cancelable context from here on out, as it's somewhat dangerous to cancel
+	// the upgrade process after this point.
+	ctx = context.TODO()
 
 	// Destroy replica and replace it with new machine w/ desired image.
 	for _, machine := range roleMap["replica"] {
