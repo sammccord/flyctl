@@ -594,17 +594,21 @@ about the Fly platform.`,
 		return KeyStrings{"recipes", "TBD",
 			`TBD`,
 		}
-	case "recipes.provision-postgres":
-		return KeyStrings{"provision-postgres", "provision postgres cluster",
-			`provision postgres cluster`,
+	case "recipes.postgres":
+		return KeyStrings{"postgres", "Postgres recipes",
+			`Postgres recipes`,
 		}
-	case "recipes.rolling-reboot":
-		return KeyStrings{"rolling-reboot", "provision postgres cluster",
-			`provision postgres cluster`,
+	case "recipes.postgres.provision":
+		return KeyStrings{"provision", "Postgres provision recipe",
+			`Postgres provision recipe`,
 		}
-	case "recipes.rolling-upgrade":
-		return KeyStrings{"rolling-upgrade", "Upgrade postgres cluster",
-			`Upgrade postgres cluster`,
+	case "recipes.postgres.reboot":
+		return KeyStrings{"reboot", "Performs a rolling-reboot against a target Postgres cluster",
+			`Performs a rolling-reboot against a target Postgres cluster`,
+		}
+	case "recipes.postgres.version-upgrade":
+		return KeyStrings{"version-upgrade", "Updates target Postgres cluster with specified image.",
+			`Updates the target Postgres cluster with the specified image.`,
 		}
 	case "regions":
 		return KeyStrings{"regions", "Manage regions",

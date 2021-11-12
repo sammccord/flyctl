@@ -1,4 +1,4 @@
-package recipes
+package recipe
 
 import (
 	"bytes"
@@ -37,15 +37,14 @@ func NewRecipeOperation(recipe *Recipe, machine *api.Machine, command string) *R
 }
 
 func (o *RecipeOperation) RunHTTPCommand(ctx context.Context, method, endpoint string) error {
-	baseUri := fmt.Sprintf("http://%s:%s@[%s]:4280", o.Recipe.App.Name, o.Recipe.AuthToken, o.MachineIP())
-	targetEndpoint := fmt.Sprintf("%s%s", baseUri, endpoint)
-
-	fmt.Printf("Running %s %s... ", method, endpoint)
+	targetEndpoint := fmt.Sprintf("http://[%s]:4280%s", o.MachineIP(), endpoint)
 	req, err := http.NewRequest(method, targetEndpoint, nil)
 	if err != nil {
 		return err
 	}
+	req.SetBasicAuth(o.Recipe.App.Name, o.Recipe.AuthToken)
 
+	fmt.Printf("Running %s %s... ", method, endpoint)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return err
@@ -97,6 +96,8 @@ func (o *RecipeOperation) RunSSHCommand(ctx context.Context) error {
 		return err
 	}
 
+	// TODO - I'm not 100% on how I feel about this yet.  However, I do like the idea of keeping the response format
+	// consistent across operations.
 	var machineResp MachineResponse
 	if err = json.Unmarshal(outBuf.Bytes(), &machineResp); err != nil {
 		return err

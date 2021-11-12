@@ -45,19 +45,23 @@ usage = "update"
 longHelp = "TBD"
 shortHelp = "TBD"
 usage = "recipes"
-[recipes.provision-postgres]
-longHelp = "provision postgres cluster"
-shortHelp = "provision postgres cluster"
-usage = "provision-postgres"
-[recipes.rolling-reboot]
-longHelp = "provision postgres cluster"
-shortHelp = "provision postgres cluster"
-usage = "rolling-reboot"
 
-[recipes.rolling-upgrade]
-longHelp = "Upgrade postgres cluster"
-shortHelp = "Upgrade postgres cluster"
-usage = "rolling-upgrade"
+[recipes.postgres]
+longHelp = "Postgres recipes"
+shortHelp = "Postgres recipes"
+usage = "postgres"
+[recipes.postgres.provision]
+longHelp = "Postgres provision recipe"
+shortHelp = "Postgres provision recipe"
+usage = "provision"
+[recipes.postgres.reboot]
+longHelp = "Performs a rolling-reboot against a target Postgres cluster"
+shortHelp = "Performs a rolling-reboot against a target Postgres cluster"
+usage = "reboot"
+[recipes.postgres.version-upgrade]
+longHelp = "Updates the target Postgres cluster with the specified image."
+shortHelp = "Updates target Postgres cluster with specified image."
+usage = "version-upgrade"
 
 [open]
 longHelp = """Open browser to current deployed application. If an optional path is specified, this is appended to the

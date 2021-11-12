@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/internal/recipes"
+	"github.com/superfly/flyctl/internal/recipe"
 )
 
 type PostgresUpgradeConfig struct {
@@ -14,13 +14,15 @@ type PostgresUpgradeConfig struct {
 	TargetImageRef string
 }
 
-func PostgresUpgradeRecipe(ctx context.Context, app *api.App, image string) error {
+func PostgresImageUpgradeRecipe(ctx context.Context, app *api.App, image string) error {
 
-	recipe, err := recipes.NewRecipe(ctx, app)
+	recipe, err := recipe.NewRecipe(ctx, app)
 	if err != nil {
 		return err
 	}
 
+	// TODO - ListMachines should exclude removed machines. Once this is fixed, we should not
+	// filter machines based on state.
 	machines, err := recipe.Client.API().ListMachines(ctx, app.Name, "started")
 	if err != nil {
 		return err
@@ -78,7 +80,7 @@ func PostgresUpgradeRecipe(ctx context.Context, app *api.App, image string) erro
 	return nil
 }
 
-func destroyMachine(ctx context.Context, recipe *recipes.Recipe, machine *api.Machine) error {
+func destroyMachine(ctx context.Context, recipe *recipe.Recipe, machine *api.Machine) error {
 	stopEndpoint := fmt.Sprintf("/v1/machines/%s/stop", machine.ID)
 	_, err := recipe.RunHTTPOperation(ctx, machine, http.MethodPost, stopEndpoint)
 	if err != nil {
@@ -94,7 +96,7 @@ func destroyMachine(ctx context.Context, recipe *recipes.Recipe, machine *api.Ma
 	return nil
 }
 
-func replaceMachine(ctx context.Context, recipe *recipes.Recipe, app *api.App, machine *api.Machine, image string) (*api.Machine, error) {
+func replaceMachine(ctx context.Context, recipe *recipe.Recipe, app *api.App, machine *api.Machine, image string) (*api.Machine, error) {
 	newConfig := machine.Config
 	newConfig["image"] = image
 

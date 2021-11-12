@@ -5,12 +5,12 @@ import (
 	"fmt"
 
 	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/internal/recipes"
+	"github.com/superfly/flyctl/internal/recipe"
 )
 
-func PostgresRebootRecipe(ctx context.Context, app *api.App) error {
+func PostgresRollingRebootRecipe(ctx context.Context, app *api.App) error {
 
-	recipe, err := recipes.NewRecipe(ctx, app)
+	recipe, err := recipe.NewRecipe(ctx, app)
 	if err != nil {
 		return err
 	}
