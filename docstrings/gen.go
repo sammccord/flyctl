@@ -598,6 +598,10 @@ about the Fly platform.`,
 		return KeyStrings{"postgres", "Postgres recipes",
 			`Postgres recipes`,
 		}
+	case "recipes.postgres.connect":
+		return KeyStrings{"connect", "Connect to PG console",
+			`Connect to PG console`,
+		}
 	case "recipes.postgres.provision":
 		return KeyStrings{"provision", "Postgres provision recipe",
 			`Postgres provision recipe`,

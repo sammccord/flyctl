@@ -5,4 +5,5 @@ const (
 	PG_RESTART_SCRIPT    = ".flyd/bin/restart"
 	PG_FAILOVER_SCRIPT   = ".flyd/bin/trigger-failover"
 	PG_IS_HEALTHY_SCRIPT = ".flyd/bin/healthy"
+	PG_CONNECT           = ".flyd/bin/connect"
 )

@@ -43,6 +43,10 @@ func PostgresImageUpgradeRecipe(ctx context.Context, app *api.App, image string)
 
 	// Destroy replica and replace it with new machine w/ desired image.
 	for _, machine := range roleMap["replica"] {
+
+		if machine.Config["image"] == image {
+			continue
+		}
 		if err = destroyMachine(ctx, recipe, machine); err != nil {
 			return err
 		}

@@ -8,6 +8,7 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"os"
 
 	"github.com/docker/docker/pkg/ioutils"
 	"github.com/superfly/flyctl/api"
@@ -66,6 +67,28 @@ func (o *RecipeOperation) RunHTTPCommand(ctx context.Context, method, endpoint s
 	o.Error = machineResp.Data.Error
 
 	o.printResponse()
+
+	return nil
+}
+
+func (o *RecipeOperation) RunSSHAttachCommand(ctx context.Context) error {
+	fmt.Printf("Running %q against %s... ", o.Command, o.Machine.ID)
+
+	formattedAddr := fmt.Sprintf("[%s]", o.Addr())
+	err := sshConnect(&SSHParams{
+		Ctx:       ctx,
+		Org:       &o.Recipe.App.Organization,
+		Dialer:    *o.Recipe.Dialer,
+		ApiClient: o.Recipe.Client.API(),
+		App:       o.Recipe.App.Name,
+		Cmd:       o.Command,
+		Stdin:     os.Stdin,
+		Stdout:    os.Stdout,
+		Stderr:    os.Stderr,
+	}, formattedAddr)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

@@ -76,3 +76,12 @@ func (r *Recipe) RunSSHOperation(ctx context.Context, machine *api.Machine, comm
 
 	return op, nil
 }
+
+func (r *Recipe) RunSSHAttachOperation(ctx context.Context, machine *api.Machine, command string) (*RecipeOperation, error) {
+	op := NewRecipeOperation(r, machine, command)
+	if err := op.RunSSHAttachCommand(ctx); err != nil {
+		return nil, err
+	}
+
+	return op, nil
+}

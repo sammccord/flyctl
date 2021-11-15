@@ -57,7 +57,23 @@ func newPostgresRecipesCommand(parent *Command, client *client.Client) *Command 
 	upgradeCmd := BuildCommandKS(pgCmd, runPostgresImageUpgradeRecipe, upgradeKeystrings, client, requireSession, requireAppName)
 	upgradeCmd.AddStringFlag(StringFlagOpts{Name: "image-ref", Description: "the target image", Default: "flyio/postgres:14"})
 
+	// Connect
+	connectKeystrings := docstrings.Get("recipes.postgres.connect")
+	BuildCommandKS(pgCmd, runPostgresConnectRecipe, connectKeystrings, client, requireSession, requireAppName)
+
 	return pgCmd
+}
+
+func runPostgresConnectRecipe(cmdCtx *cmdctx.CmdContext) error {
+	ctx := cmdCtx.Command.Context()
+	client := cmdCtx.Client.API()
+
+	app, err := client.GetApp(ctx, cmdCtx.AppName)
+	if err != nil {
+		return fmt.Errorf("get app: %w", err)
+	}
+
+	return recipes.PostgresConnectRecipe(cmdCtx, app)
 }
 
 func runPostgresImageUpgradeRecipe(cmdCtx *cmdctx.CmdContext) error {
