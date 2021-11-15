@@ -10,11 +10,6 @@ import (
 	"github.com/superfly/flyctl/recipes"
 )
 
-const (
-	MACHINE_ROLE = ".flyd/bin/role"
-	MACHINE_
-)
-
 func newRecipesCommand(client *client.Client) *Command {
 	keystrings := docstrings.Get("recipes")
 	cmd := BuildCommandCobra(nil, nil, &cobra.Command{
