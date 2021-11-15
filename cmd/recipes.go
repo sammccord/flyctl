@@ -59,7 +59,10 @@ func newPostgresRecipesCommand(parent *Command, client *client.Client) *Command 
 
 	// Connect
 	connectKeystrings := docstrings.Get("recipes.postgres.connect")
-	BuildCommandKS(pgCmd, runPostgresConnectRecipe, connectKeystrings, client, requireSession, requireAppName)
+	connectCmd := BuildCommandKS(pgCmd, runPostgresConnectRecipe, connectKeystrings, client, requireSession, requireAppName)
+	connectCmd.AddStringFlag(StringFlagOpts{Name: "user", Description: "Postgres user", Default: "postgres"})
+	connectCmd.AddStringFlag(StringFlagOpts{Name: "password", Description: "Postgres user password"})
+	connectCmd.AddStringFlag(StringFlagOpts{Name: "database", Description: "Target postgres database", Default: "postgres"})
 
 	return pgCmd
 }
@@ -73,7 +76,14 @@ func runPostgresConnectRecipe(cmdCtx *cmdctx.CmdContext) error {
 		return fmt.Errorf("get app: %w", err)
 	}
 
-	return recipes.PostgresConnectRecipe(cmdCtx, app)
+	input := recipes.PostgresConnectInput{
+		App:      app,
+		Username: cmdCtx.Config.GetString("user"),
+		Password: cmdCtx.Config.GetString("password"),
+		Database: cmdCtx.Config.GetString("database"),
+	}
+
+	return recipes.PostgresConnectRecipe(cmdCtx, &input)
 }
 
 func runPostgresImageUpgradeRecipe(cmdCtx *cmdctx.CmdContext) error {
