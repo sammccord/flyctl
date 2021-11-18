@@ -1,6 +1,9 @@
 package api
 
-import "context"
+import (
+	"context"
+	"fmt"
+)
 
 func (client *Client) GetApps(ctx context.Context, role *string) ([]App, error) {
 	query := `
@@ -179,6 +182,8 @@ func (client *Client) CreateApp(ctx context.Context, input CreateAppInput) (*App
 	if err != nil {
 		return nil, err
 	}
+
+	fmt.Printf("%+v\n", data)
 
 	return &data.CreateApp.App, nil
 }

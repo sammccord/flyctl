@@ -61,18 +61,12 @@ func sshConnect(p *SSHParams, addr string) error {
 		PrivateKey:  string(pemkey),
 	}
 
-	endSpin := spin(fmt.Sprintf("Connecting to %s...", addr),
-		fmt.Sprintf("Connecting to %s... complete\n", addr))
-	defer endSpin()
-
 	if err := sshClient.Connect(context.Background()); err != nil {
 		return errors.Wrap(err, "error connecting to SSH server")
 	}
 	defer sshClient.Close()
 
 	terminal.Debugf("Connection completed.\n", addr)
-
-	endSpin()
 
 	term := &flySsh.Terminal{
 		Stdin:  p.Stdin,

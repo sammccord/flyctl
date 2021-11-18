@@ -3,6 +3,7 @@ package recipes
 import (
 	"context"
 	"crypto/rand"
+	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"time"
@@ -46,4 +47,10 @@ func GenerateSecureToken(length int) string {
 		return ""
 	}
 	return hex.EncodeToString(b)
+}
+
+// encodeCommand will base64 encode a command string so it can be passed
+// in with  exec.Command.
+func EncodeCommand(command string) string {
+	return base64.StdEncoding.Strict().EncodeToString([]byte(command))
 }

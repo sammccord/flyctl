@@ -96,13 +96,14 @@ func (p *PostgresProvisionRecipe) configurePostgres() api.MachineConfig {
 }
 
 func (p *PostgresProvisionRecipe) createApp() (*api.App, error) {
+
 	fmt.Println("Creating app...")
 	appInput := api.CreateAppInput{
 		OrganizationID:  p.Config.Organization.ID,
 		Name:            p.Config.AppName,
 		PreferredRegion: &p.Config.Region,
-		// TODO - We should use constants to reference this.
-		Runtime: "FIRECRACKER",
+		Runtime:         "FIRECRACKER",
+		AppRoleID:       "postgres_cluster",
 	}
 	return p.cmdCtx.Client.API().CreateApp(p.cmdCtx.Command.Context(), appInput)
 }

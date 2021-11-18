@@ -66,6 +66,11 @@ usage = "version-upgrade"
 longHelp = "Connect to PG console"
 shortHelp = "Connect to PG console"
 usage = "connect"
+[recipes.postgres.attach]
+longHelp = "Attach PG to Application"
+shortHelp = "Attach PG to Application"
+usage = "attach"
+
 
 [open]
 longHelp = """Open browser to current deployed application. If an optional path is specified, this is appended to the

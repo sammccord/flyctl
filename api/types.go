@@ -541,6 +541,7 @@ type CreateAppInput struct {
 	Name            string  `json:"name"`
 	PreferredRegion *string `json:"preferredRegion,omitempty"`
 	Network         *string `json:"network,omitempty"`
+	AppRoleID       string  `json:"appRoleId,omitempty"`
 }
 
 type LogEntry struct {
@@ -1031,6 +1032,7 @@ type AttachPostgresClusterInput struct {
 	AppID                string  `json:"appId"`
 	PostgresClusterAppID string  `json:"postgresClusterAppId"`
 	DatabaseName         *string `json:"databaseName,omitempty"`
+	DatabaseUser         *string `json:"databaseUser,omitempty"`
 	VariableName         *string `json:"variableName,omitempty"`
 }
 
