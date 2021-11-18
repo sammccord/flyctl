@@ -3,6 +3,7 @@ package recipes
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/superfly/flyctl/api"
 	"github.com/superfly/flyctl/cmdctx"
@@ -23,9 +24,9 @@ func PostgresAttachRecipe(cmdctx *cmdctx.CmdContext, app *api.App, input api.Att
 	}
 
 	// Validate database name
-	dbVerifySQL := EncodeCommand(fmt.Sprintf("select exists(select datname from pg_catalog.pg_database WHERE lower(datname) = lower('%s'));", *input.DatabaseName))
-	dbVerifyCmd := fmt.Sprintf("%s -database postgres -command %s", PG_RUN_SQL, dbVerifySQL)
-	dbVerifyOp, err := recipe.RunSSHOperation(ctx, machines[0], dbVerifyCmd)
+	dbVerifySQL := EncodeCommand(fmt.Sprintf("select exists(select datname from pg_catalog.pg_database WHERE datname = '%s');", *input.DatabaseName))
+	dbVerifyCmd := []string{PG_RUN_SQL_SCRIPT, "-database", "postgres", "-command", dbVerifySQL}
+	dbVerifyOp, err := recipe.RunSSHOperation(ctx, machines[0], strings.Join(dbVerifyCmd, " "))
 	if err != nil {
 		return err
 	}
@@ -34,9 +35,9 @@ func PostgresAttachRecipe(cmdctx *cmdctx.CmdContext, app *api.App, input api.Att
 	}
 
 	// Validate user name
-	userVerifySQL := EncodeCommand(fmt.Sprintf("select exists (select from pg_roles where lower(rolname) = lower('%s'));", *input.DatabaseUser))
-	userVerifyCmd := fmt.Sprintf("%s -database postgres -command %s", PG_RUN_SQL, userVerifySQL)
-	userVerifyOp, err := recipe.RunSSHOperation(ctx, machines[0], userVerifyCmd)
+	userVerifySQL := EncodeCommand(fmt.Sprintf("select exists (select from pg_roles where rolname = '%s');", *input.DatabaseUser))
+	userVerifyCmd := []string{PG_RUN_SQL_SCRIPT, "-database", "postgres", "-command", userVerifySQL}
+	userVerifyOp, err := recipe.RunSSHOperation(ctx, machines[0], strings.Join(userVerifyCmd, " "))
 	if err != nil {
 		return err
 	}
@@ -46,8 +47,8 @@ func PostgresAttachRecipe(cmdctx *cmdctx.CmdContext, app *api.App, input api.Att
 
 	// Create database
 	dbCreateSQL := EncodeCommand(fmt.Sprintf("CREATE DATABASE %s", *input.DatabaseName))
-	dbCreateCmd := fmt.Sprintf("%s -database postgres -command %s", PG_RUN_SQL, dbCreateSQL)
-	_, err = recipe.RunSSHOperation(ctx, machines[0], dbCreateCmd)
+	dbCreateCmd := []string{PG_RUN_SQL_SCRIPT, "-database", "postgres", "-command", dbCreateSQL}
+	_, err = recipe.RunSSHOperation(ctx, machines[0], strings.Join(dbCreateCmd, " "))
 	if err != nil {
 		return err
 	}
@@ -55,8 +56,9 @@ func PostgresAttachRecipe(cmdctx *cmdctx.CmdContext, app *api.App, input api.Att
 	// Generate user
 	password := GenerateSecureToken(15)
 	createUserSQL := EncodeCommand(fmt.Sprintf("CREATE USER %s WITH ENCRYPTED PASSWORD '%s' LOGIN;", *input.DatabaseUser, password))
-	createUserCmd := fmt.Sprintf("%s -database %s -command %s", PG_RUN_SQL, *input.DatabaseName, createUserSQL)
-	_, err = recipe.RunSSHOperation(ctx, machines[0], createUserCmd)
+	createUserCmd := []string{PG_RUN_SQL_SCRIPT, "-database", *input.DatabaseName, "-command", createUserSQL}
+
+	_, err = recipe.RunSSHOperation(ctx, machines[0], strings.Join(createUserCmd, " "))
 	if err != nil {
 		cleanUp(ctx, recipe, machines[0], input)
 		return err
@@ -68,8 +70,9 @@ func PostgresAttachRecipe(cmdctx *cmdctx.CmdContext, app *api.App, input api.Att
 		return err
 	}
 
-	secrets := map[string]string{}
 	connectionString := fmt.Sprintf("postgres://%s:%s@%s.internal:5432/%s", *input.DatabaseUser, password, input.PostgresClusterAppID, *input.DatabaseName)
+
+	secrets := map[string]string{}
 	secrets[*input.VariableName] = connectionString
 
 	_, err = cmdctx.Client.API().SetSecrets(ctx, input.AppID, secrets)
@@ -86,14 +89,14 @@ func PostgresAttachRecipe(cmdctx *cmdctx.CmdContext, app *api.App, input api.Att
 
 func cleanUp(ctx context.Context, recipe *recipe.Recipe, machine *api.Machine, input api.AttachPostgresClusterInput) {
 	dbDropSQL := EncodeCommand(fmt.Sprintf("DROP DATABASE %s IF EXISTS", *input.DatabaseName))
-	dbDropCmd := fmt.Sprintf("%s -database postgres -command %s", PG_RUN_SQL, dbDropSQL)
+	dbDropCmd := fmt.Sprintf("%s -database postgres -command %s", PG_RUN_SQL_SCRIPT, dbDropSQL)
 	_, err := recipe.RunSSHOperation(ctx, machine, dbDropCmd)
 	if err != nil {
 		fmt.Printf("Failed to drop database %q. %v", *input.DatabaseName, err)
 	}
 
 	userDropSQL := EncodeCommand(fmt.Sprintf("DROP USER %s IF EXISTS", *input.DatabaseUser))
-	userDropCmd := fmt.Sprintf("%s -database postgres -command %s", PG_RUN_SQL, userDropSQL)
+	userDropCmd := fmt.Sprintf("%s -database postgres -command %s", PG_RUN_SQL_SCRIPT, userDropSQL)
 	_, err = recipe.RunSSHOperation(ctx, machine, userDropCmd)
 	if err != nil {
 		fmt.Printf("Failed to drop user %q. %v", *input.DatabaseUser, err)

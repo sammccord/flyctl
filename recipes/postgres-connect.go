@@ -28,7 +28,7 @@ func PostgresConnectRecipe(cmdctx *cmdctx.CmdContext, input *PostgresConnectInpu
 		return err
 	}
 
-	cmd := fmt.Sprintf("%s %s %s %s", PG_CONNECT, input.Database, input.Username, input.Password)
+	cmd := fmt.Sprintf("%s %s %s %s", PG_CONNECT_SCRIPT, input.Database, input.Username, input.Password)
 
 	_, err = recipe.RunSSHAttachOperation(ctx, machines[0], cmd)
 	if err != nil {
