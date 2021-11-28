@@ -76,7 +76,6 @@ func NewRootCmd(client *client.Client) *cobra.Command {
 		newVolumesCommand(client),
 		newWireGuardCommand(client),
 		newSSHCommand(client),
-		newAgentCommand(client),
 		newChecksCommand(client),
 		newPostgresCommand(client),
 		newVMCommand(client),
