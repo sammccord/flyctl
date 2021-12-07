@@ -17,6 +17,7 @@ import (
 	"github.com/superfly/flyctl/internal/cli/internal/command/resume"
 	"github.com/superfly/flyctl/internal/cli/internal/command/suspend"
 	"github.com/superfly/flyctl/internal/cli/internal/command/version"
+	"github.com/superfly/flyctl/internal/cli/internal/command/wireguard"
 	"github.com/superfly/flyctl/internal/client"
 )
 
@@ -62,6 +63,7 @@ func New() *cobra.Command {
 				restart.New(), // TODO: deprecate
 				orgs.New(),
 				auth.New(),
+				wireguard.New(),
 			)
 
 			return root
@@ -85,6 +87,7 @@ func New() *cobra.Command {
 		restart.New(), // TODO: deprecate
 		orgs.New(),
 		auth.New(),
+		wireguard.New(),
 	}
 
 	// newCommandNames is the set of the names of the above commands
