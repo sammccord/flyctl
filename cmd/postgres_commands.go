@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/pkg/agent"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/pkg/agent"
 )
 
 type PostgresDatabaseListResponse struct {

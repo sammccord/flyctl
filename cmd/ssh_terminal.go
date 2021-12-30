@@ -12,13 +12,13 @@ import (
 	"github.com/briandowns/spinner"
 	"github.com/docker/docker/pkg/ioutils"
 	"github.com/pkg/errors"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/helpers"
-	"github.com/superfly/flyctl/internal/flyerr"
-	"github.com/superfly/flyctl/pkg/agent"
-	"github.com/superfly/flyctl/pkg/ssh"
-	"github.com/superfly/flyctl/terminal"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/helpers"
+	"github.com/sammccord/flyctl/internal/flyerr"
+	"github.com/sammccord/flyctl/pkg/agent"
+	"github.com/sammccord/flyctl/pkg/ssh"
+	"github.com/sammccord/flyctl/terminal"
 )
 
 func runSSHCommand(cmdCtx *cmdctx.CmdContext, app *api.App, dialer agent.Dialer, cmd string) ([]byte, error) {

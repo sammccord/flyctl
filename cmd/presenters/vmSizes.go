@@ -3,7 +3,7 @@ package presenters
 import (
 	"fmt"
 
-	"github.com/superfly/flyctl/api"
+	"github.com/sammccord/flyctl/api"
 )
 
 type VMSizes struct {

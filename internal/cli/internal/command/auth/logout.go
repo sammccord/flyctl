@@ -6,12 +6,12 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/superfly/flyctl/pkg/agent"
-	"github.com/superfly/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/pkg/agent"
+	"github.com/sammccord/flyctl/pkg/iostreams"
 
-	"github.com/superfly/flyctl/internal/cli/internal/command"
-	"github.com/superfly/flyctl/internal/cli/internal/config"
-	"github.com/superfly/flyctl/internal/env"
+	"github.com/sammccord/flyctl/internal/cli/internal/command"
+	"github.com/sammccord/flyctl/internal/cli/internal/config"
+	"github.com/sammccord/flyctl/internal/env"
 )
 
 func newLogout() *cobra.Command {

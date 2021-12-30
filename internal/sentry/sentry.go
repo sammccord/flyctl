@@ -11,7 +11,7 @@ import (
 	"github.com/getsentry/sentry-go"
 	"github.com/logrusorgru/aurora"
 
-	"github.com/superfly/flyctl/internal/buildinfo"
+	"github.com/sammccord/flyctl/internal/buildinfo"
 )
 
 var initError error // set during init

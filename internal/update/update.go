@@ -14,10 +14,10 @@ import (
 
 	"github.com/cli/safeexec"
 
-	"github.com/superfly/flyctl/internal/buildinfo"
-	"github.com/superfly/flyctl/internal/cmdutil"
-	"github.com/superfly/flyctl/internal/env"
-	"github.com/superfly/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/internal/buildinfo"
+	"github.com/sammccord/flyctl/internal/cmdutil"
+	"github.com/sammccord/flyctl/internal/env"
+	"github.com/sammccord/flyctl/pkg/iostreams"
 )
 
 type Release struct {

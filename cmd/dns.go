@@ -7,10 +7,10 @@ import (
 	"strconv"
 
 	"github.com/olekukonko/tablewriter"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/docstrings"
+	"github.com/sammccord/flyctl/internal/client"
 	"github.com/spf13/cobra"
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/docstrings"
-	"github.com/superfly/flyctl/internal/client"
 )
 
 func newDNSCommand(client *client.Client) *Command {

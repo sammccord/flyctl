@@ -12,11 +12,11 @@ import (
 	badrand "math/rand"
 
 	"github.com/pkg/errors"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/flyctl"
+	"github.com/sammccord/flyctl/pkg/wg"
+	"github.com/sammccord/flyctl/terminal"
 	"github.com/spf13/viper"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/flyctl"
-	"github.com/superfly/flyctl/pkg/wg"
-	"github.com/superfly/flyctl/terminal"
 	"golang.org/x/crypto/curve25519"
 )
 

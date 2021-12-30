@@ -1,4 +1,4 @@
-module github.com/superfly/flyctl
+module github.com/sammccord/flyctl
 
 go 1.16
 
@@ -44,7 +44,7 @@ require (
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.8.1
 	github.com/stretchr/testify v1.7.0
-	github.com/superfly/flyctl/api v0.0.0-00010101000000-000000000000
+	github.com/sammccord/flyctl/api v0.0.0-00010101000000-000000000000
 	golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e
 	golang.org/x/net v0.0.0-20210525063256-abc453219eb5
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
@@ -58,4 +58,4 @@ require (
 
 replace github.com/BurntSushi/toml => github.com/michaeldwan/toml v0.3.2-0.20191213213541-3c5ced72b6f3
 
-replace github.com/superfly/flyctl/api => ./api
+replace github.com/sammccord/flyctl/api => ./api

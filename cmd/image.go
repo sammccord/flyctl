@@ -6,12 +6,12 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/logrusorgru/aurora"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/cmd/presenters"
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/docstrings"
-	"github.com/superfly/flyctl/internal/client"
-	"github.com/superfly/flyctl/internal/cmdfmt"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/cmd/presenters"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/docstrings"
+	"github.com/sammccord/flyctl/internal/client"
+	"github.com/sammccord/flyctl/internal/cmdfmt"
 )
 
 func newImageCommand(client *client.Client) *Command {

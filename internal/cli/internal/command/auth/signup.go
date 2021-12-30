@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/superfly/flyctl/internal/cli/internal/command"
+	"github.com/sammccord/flyctl/internal/cli/internal/command"
 )
 
 func newSignup() *cobra.Command {

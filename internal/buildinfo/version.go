@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/blang/semver"
-	"github.com/superfly/flyctl/terminal"
+	"github.com/sammccord/flyctl/terminal"
 )
 
 var buildDate = "<date>"

@@ -6,8 +6,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/superfly/flyctl/internal/buildinfo"
-	"github.com/superfly/flyctl/internal/cmdutil"
+	"github.com/sammccord/flyctl/internal/buildinfo"
+	"github.com/sammccord/flyctl/internal/cmdutil"
 
 	"github.com/logrusorgru/aurora"
 )

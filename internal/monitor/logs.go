@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/jpillora/backoff"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/terminal"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/terminal"
 )
 
 type LogOptions struct {

@@ -9,13 +9,13 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/dustin/go-humanize"
 	"github.com/logrusorgru/aurora"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/helpers"
+	"github.com/sammccord/flyctl/internal/client"
 	"github.com/spf13/cobra"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/helpers"
-	"github.com/superfly/flyctl/internal/client"
 
-	"github.com/superfly/flyctl/docstrings"
+	"github.com/sammccord/flyctl/docstrings"
 )
 
 func newVolumesCommand(client *client.Client) *Command {

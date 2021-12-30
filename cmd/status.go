@@ -6,16 +6,16 @@ import (
 	"time"
 
 	"github.com/inancgumus/screen"
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/internal/client"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/internal/client"
 
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/docstrings"
 	"github.com/segmentio/textio"
 	"github.com/spf13/cobra"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/docstrings"
 
 	"github.com/logrusorgru/aurora"
-	"github.com/superfly/flyctl/cmd/presenters"
+	"github.com/sammccord/flyctl/cmd/presenters"
 )
 
 func newStatusCommand(client *client.Client) *Command {

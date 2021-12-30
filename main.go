@@ -7,11 +7,11 @@ import (
 	"runtime"
 	"syscall"
 
-	"github.com/superfly/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/pkg/iostreams"
 
-	"github.com/superfly/flyctl/internal/buildinfo"
-	"github.com/superfly/flyctl/internal/cli"
-	"github.com/superfly/flyctl/internal/sentry"
+	"github.com/sammccord/flyctl/internal/buildinfo"
+	"github.com/sammccord/flyctl/internal/cli"
+	"github.com/sammccord/flyctl/internal/sentry"
 )
 
 func main() {

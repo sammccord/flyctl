@@ -8,13 +8,13 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/pkg/errors"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/docstrings"
+	"github.com/sammccord/flyctl/internal/client"
+	"github.com/sammccord/flyctl/pkg/agent"
+	"github.com/sammccord/flyctl/pkg/proxy"
+	"github.com/sammccord/flyctl/terminal"
 	"github.com/spf13/cobra"
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/docstrings"
-	"github.com/superfly/flyctl/internal/client"
-	"github.com/superfly/flyctl/pkg/agent"
-	"github.com/superfly/flyctl/pkg/proxy"
-	"github.com/superfly/flyctl/terminal"
 )
 
 func newProxyCommand(client *client.Client) *Command {

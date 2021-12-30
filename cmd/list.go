@@ -6,11 +6,11 @@ import (
 	"time"
 
 	"github.com/dustin/go-humanize"
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/helpers"
-	"github.com/superfly/flyctl/internal/client"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/helpers"
+	"github.com/sammccord/flyctl/internal/client"
 
-	"github.com/superfly/flyctl/docstrings"
+	"github.com/sammccord/flyctl/docstrings"
 )
 
 func newListCommand(client *client.Client) *Command {

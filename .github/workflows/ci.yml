@@ -88,12 +88,12 @@ jobs:
       - name: Get go version
         id: go-version
         run: echo "::set-output name=version::$(go env GOVERSION)"
-      - name: Docker Login
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-        run: |
-          echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
+      # - name: Docker Login
+      #   env:
+      #     DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+      #   run: |
+      #     echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
       - uses: actions/cache@v2
         with:
           # In order:
@@ -121,7 +121,7 @@ jobs:
           version: latest
           args: release --rm-dist --release-notes=./tmp/changelog.txt
         env:
-          GITHUB_TOKEN: ${{ secrets.GORELEASER_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload checksums as artifact
         uses: actions/upload-artifact@v2
         with:

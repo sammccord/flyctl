@@ -8,11 +8,11 @@ import (
 	"github.com/blang/semver"
 	"github.com/spf13/cobra"
 
-	"github.com/superfly/flyctl/internal/buildinfo"
-	"github.com/superfly/flyctl/internal/cli/internal/cache"
-	"github.com/superfly/flyctl/internal/cli/internal/command"
-	"github.com/superfly/flyctl/internal/update"
-	"github.com/superfly/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/internal/buildinfo"
+	"github.com/sammccord/flyctl/internal/cli/internal/cache"
+	"github.com/sammccord/flyctl/internal/cli/internal/command"
+	"github.com/sammccord/flyctl/internal/update"
+	"github.com/sammccord/flyctl/pkg/iostreams"
 )
 
 func newUpdate() *cobra.Command {

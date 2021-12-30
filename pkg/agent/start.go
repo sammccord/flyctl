@@ -1,3 +1,4 @@
+//go:build !windows
 // +build !windows
 
 package agent
@@ -15,8 +16,8 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/terminal"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/terminal"
 )
 
 func StartDaemon(ctx context.Context, api *api.Client, command string) (*Client, error) {

@@ -3,11 +3,11 @@ package client
 import (
 	"errors"
 
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/flyctl"
-	"github.com/superfly/flyctl/internal/buildinfo"
-	"github.com/superfly/flyctl/pkg/iostreams"
-	"github.com/superfly/flyctl/terminal"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/flyctl"
+	"github.com/sammccord/flyctl/internal/buildinfo"
+	"github.com/sammccord/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/terminal"
 )
 
 var ErrNoAuthToken = errors.New("No access token available. Please login with 'flyctl auth login'")

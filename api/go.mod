@@ -1,4 +1,4 @@
-module github.com/superfly/flyctl/api
+module github.com/sammccord/flyctl/api
 
 go 1.16
 

@@ -10,10 +10,10 @@ import (
 
 	"github.com/nats-io/nats.go"
 	"github.com/pkg/errors"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/flyctl"
-	"github.com/superfly/flyctl/pkg/agent"
-	"github.com/superfly/flyctl/terminal"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/flyctl"
+	"github.com/sammccord/flyctl/pkg/agent"
+	"github.com/sammccord/flyctl/terminal"
 )
 
 type natsLogStream struct {

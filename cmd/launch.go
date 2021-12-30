@@ -13,14 +13,14 @@ import (
 	"github.com/logrusorgru/aurora"
 	"github.com/spf13/cobra"
 
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/docstrings"
-	"github.com/superfly/flyctl/flyctl"
-	"github.com/superfly/flyctl/helpers"
-	"github.com/superfly/flyctl/internal/build/imgsrc"
-	"github.com/superfly/flyctl/internal/client"
-	"github.com/superfly/flyctl/internal/sourcecode"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/docstrings"
+	"github.com/sammccord/flyctl/flyctl"
+	"github.com/sammccord/flyctl/helpers"
+	"github.com/sammccord/flyctl/internal/build/imgsrc"
+	"github.com/sammccord/flyctl/internal/client"
+	"github.com/sammccord/flyctl/internal/sourcecode"
 )
 
 func newLaunchCommand(client *client.Client) *Command {

@@ -3,7 +3,7 @@ package presenters
 import (
 	"strconv"
 
-	"github.com/superfly/flyctl/api"
+	"github.com/sammccord/flyctl/api"
 )
 
 type AutoscalingRegionConfigs struct {

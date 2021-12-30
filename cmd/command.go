@@ -5,17 +5,17 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/docstrings"
-	"github.com/superfly/flyctl/flyctl"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/docstrings"
+	"github.com/sammccord/flyctl/flyctl"
 
+	"github.com/sammccord/flyctl/helpers"
+	"github.com/sammccord/flyctl/internal/buildinfo"
+	"github.com/sammccord/flyctl/internal/client"
+	"github.com/sammccord/flyctl/internal/flyerr"
+	"github.com/sammccord/flyctl/terminal"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/superfly/flyctl/helpers"
-	"github.com/superfly/flyctl/internal/buildinfo"
-	"github.com/superfly/flyctl/internal/client"
-	"github.com/superfly/flyctl/internal/flyerr"
-	"github.com/superfly/flyctl/terminal"
 )
 
 // RunFn - Run function for commands which takes a command context

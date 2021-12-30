@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/pkg/iostreams"
-	"github.com/superfly/flyctl/terminal"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/terminal"
 )
 
 type remoteImageResolver struct {

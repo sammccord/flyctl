@@ -8,10 +8,10 @@ generate:
 
 build: generate
 	@echo Running Build
-	go build -o bin/flyctl -ldflags="-X 'github.com/superfly/flyctl/internal/buildinfo.buildDate=$(NOW_RFC3339)'" . 
+	go build -o bin/flyctl -ldflags="-X 'github.com/sammccord/flyctl/internal/buildinfo.buildDate=$(NOW_RFC3339)'" . 
 
 test:
-	go test ./... -ldflags="-X 'github.com/superfly/flyctl/internal/buildinfo.buildDate=$(NOW_RFC3339)'"
+	go test ./... -ldflags="-X 'github.com/sammccord/flyctl/internal/buildinfo.buildDate=$(NOW_RFC3339)'"
 
 cmddocs: generate
 	@echo Running Docs Generation

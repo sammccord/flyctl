@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/superfly/flyctl/flyctl"
+	"github.com/sammccord/flyctl/flyctl"
 )
 
 func logDir() (string, error) {

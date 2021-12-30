@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/pkg/logs"
-	"github.com/superfly/flyctl/terminal"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/pkg/logs"
+	"github.com/sammccord/flyctl/terminal"
 
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/cmd/presenters"
-	"github.com/superfly/flyctl/docstrings"
-	"github.com/superfly/flyctl/internal/client"
-	"github.com/superfly/flyctl/internal/deployment"
-	"github.com/superfly/flyctl/internal/flyerr"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/cmd/presenters"
+	"github.com/sammccord/flyctl/docstrings"
+	"github.com/sammccord/flyctl/internal/client"
+	"github.com/sammccord/flyctl/internal/deployment"
+	"github.com/sammccord/flyctl/internal/flyerr"
 )
 
 func newMonitorCommand(client *client.Client) *Command {

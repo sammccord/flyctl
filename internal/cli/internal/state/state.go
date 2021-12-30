@@ -5,7 +5,7 @@ import (
 	"context"
 	"path/filepath"
 
-	"github.com/superfly/flyctl/internal/cli/internal/config"
+	"github.com/sammccord/flyctl/internal/cli/internal/config"
 )
 
 type contextKeyType int

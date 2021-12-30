@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/logrusorgru/aurora"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/pkg/iostreams"
 )
 
 func PrintServicesList(s *iostreams.IOStreams, services []api.Service) {

@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 package agent
@@ -6,7 +7,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/superfly/flyctl/api"
+	"github.com/sammccord/flyctl/api"
 )
 
 func StartDaemon(ctx context.Context, api *api.Client, cmd string) (*Client, error) {

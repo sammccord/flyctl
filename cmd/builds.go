@@ -3,14 +3,14 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/superfly/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/cmdctx"
 
-	"github.com/superfly/flyctl/docstrings"
-	"github.com/superfly/flyctl/internal/builds"
-	"github.com/superfly/flyctl/internal/client"
+	"github.com/sammccord/flyctl/docstrings"
+	"github.com/sammccord/flyctl/internal/builds"
+	"github.com/sammccord/flyctl/internal/client"
 
+	"github.com/sammccord/flyctl/cmd/presenters"
 	"github.com/spf13/cobra"
-	"github.com/superfly/flyctl/cmd/presenters"
 )
 
 func newBuildsCommand(client *client.Client) *Command {

@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/superfly/flyctl/api"
+	"github.com/sammccord/flyctl/api"
 )
 
 func isInterrupt(err error) bool {

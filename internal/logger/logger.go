@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/logrusorgru/aurora"
-	"github.com/superfly/flyctl/internal/buildinfo"
+	"github.com/sammccord/flyctl/internal/buildinfo"
 )
 
 type Level int

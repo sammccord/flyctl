@@ -8,12 +8,12 @@ import (
 	"strings"
 
 	hero "github.com/heroku/heroku-go/v5"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/docstrings"
+	"github.com/sammccord/flyctl/flyctl"
+	"github.com/sammccord/flyctl/internal/client"
 	"github.com/spf13/cobra"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/docstrings"
-	"github.com/superfly/flyctl/flyctl"
-	"github.com/superfly/flyctl/internal/client"
 )
 
 var errAppNameTaken = fmt.Errorf("app already exists")

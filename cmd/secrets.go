@@ -7,15 +7,15 @@ import (
 	"os"
 	"strings"
 
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/internal/client"
-	"github.com/superfly/flyctl/internal/cmdutil"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/internal/client"
+	"github.com/sammccord/flyctl/internal/cmdutil"
 
-	"github.com/superfly/flyctl/docstrings"
+	"github.com/sammccord/flyctl/docstrings"
 
+	"github.com/sammccord/flyctl/cmd/presenters"
+	"github.com/sammccord/flyctl/helpers"
 	"github.com/spf13/cobra"
-	"github.com/superfly/flyctl/cmd/presenters"
-	"github.com/superfly/flyctl/helpers"
 )
 
 func newSecretsCommand(client *client.Client) *Command {

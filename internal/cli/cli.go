@@ -12,12 +12,12 @@ import (
 	"github.com/logrusorgru/aurora"
 	"github.com/spf13/cobra"
 
-	"github.com/superfly/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/pkg/iostreams"
 
-	"github.com/superfly/flyctl/internal/flyerr"
-	"github.com/superfly/flyctl/internal/logger"
+	"github.com/sammccord/flyctl/internal/flyerr"
+	"github.com/sammccord/flyctl/internal/logger"
 
-	"github.com/superfly/flyctl/internal/cli/internal/command/root"
+	"github.com/sammccord/flyctl/internal/cli/internal/command/root"
 )
 
 // Run runs the command line interface with the given arguments and reports the

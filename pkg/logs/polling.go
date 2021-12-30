@@ -6,7 +6,7 @@ import (
 
 	"github.com/jpillora/backoff"
 	"github.com/pkg/errors"
-	"github.com/superfly/flyctl/api"
+	"github.com/sammccord/flyctl/api"
 )
 
 type pollingStream struct {

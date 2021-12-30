@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/superfly/flyctl/api"
+	"github.com/sammccord/flyctl/api"
 )
 
 type BuildMonitor struct {

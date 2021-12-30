@@ -3,11 +3,11 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/internal/buildinfo"
-	"github.com/superfly/flyctl/internal/client"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/internal/buildinfo"
+	"github.com/sammccord/flyctl/internal/client"
 
-	"github.com/superfly/flyctl/docstrings"
+	"github.com/sammccord/flyctl/docstrings"
 
 	"github.com/skratchdot/open-golang/open"
 )

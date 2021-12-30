@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/pkg/retry"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/pkg/retry"
 )
 
 func WaitForRunningMachine(ctx context.Context, appName string, machineID string, apiClient *api.Client) (*api.Machine, error) {

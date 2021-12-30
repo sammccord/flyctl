@@ -8,7 +8,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"github.com/superfly/flyctl/internal/filemu"
+	"github.com/sammccord/flyctl/internal/filemu"
 )
 
 // SetAccessToken sets the value of the access token at the configuration file

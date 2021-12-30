@@ -14,14 +14,14 @@ import (
 	"github.com/skratchdot/open-golang/open"
 	"github.com/spf13/cobra"
 
-	"github.com/superfly/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/pkg/iostreams"
 
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/internal/cli/internal/command"
-	"github.com/superfly/flyctl/internal/cli/internal/config"
-	"github.com/superfly/flyctl/internal/cli/internal/state"
-	"github.com/superfly/flyctl/internal/client"
-	"github.com/superfly/flyctl/internal/logger"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/internal/cli/internal/command"
+	"github.com/sammccord/flyctl/internal/cli/internal/config"
+	"github.com/sammccord/flyctl/internal/cli/internal/state"
+	"github.com/sammccord/flyctl/internal/client"
+	"github.com/sammccord/flyctl/internal/logger"
 )
 
 // New initializes and returns a new apps Command.

@@ -1,3 +1,4 @@
+//go:build !windows
 // +build !windows
 
 package agent
@@ -12,8 +13,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/pkg/wg"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/pkg/wg"
 )
 
 type agentClientProvider struct {

@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/pkg/retry"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/pkg/retry"
 )
 
 func WaitForRunningVM(ctx context.Context, appName string, apiClient *api.Client) (err error) {

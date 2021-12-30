@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 package agent
@@ -9,9 +10,9 @@ import (
 	"os"
 	"sync"
 
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/internal/buildinfo"
-	"github.com/superfly/flyctl/pkg/wg"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/internal/buildinfo"
+	"github.com/sammccord/flyctl/pkg/wg"
 )
 
 func newClientProvider(path string, api *api.Client) (clientProvider, error) {

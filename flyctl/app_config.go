@@ -12,8 +12,8 @@ import (
 	"time"
 
 	"github.com/BurntSushi/toml"
-	"github.com/superfly/flyctl/helpers"
-	"github.com/superfly/flyctl/internal/sourcecode"
+	"github.com/sammccord/flyctl/helpers"
+	"github.com/sammccord/flyctl/internal/sourcecode"
 )
 
 type ConfigFormat string

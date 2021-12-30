@@ -15,12 +15,12 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/flyctl"
-	"github.com/superfly/flyctl/internal/buildinfo"
-	"github.com/superfly/flyctl/internal/wireguard"
-	"github.com/superfly/flyctl/pkg/wg"
-	"github.com/superfly/flyctl/terminal"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/flyctl"
+	"github.com/sammccord/flyctl/internal/buildinfo"
+	"github.com/sammccord/flyctl/internal/wireguard"
+	"github.com/sammccord/flyctl/pkg/wg"
+	"github.com/sammccord/flyctl/terminal"
 )
 
 var (

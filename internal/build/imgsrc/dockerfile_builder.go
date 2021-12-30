@@ -21,11 +21,11 @@ import (
 	"github.com/moby/buildkit/util/progress/progressui"
 	"github.com/moby/term"
 	"github.com/pkg/errors"
-	"github.com/superfly/flyctl/flyctl"
-	"github.com/superfly/flyctl/helpers"
-	"github.com/superfly/flyctl/internal/cmdfmt"
-	"github.com/superfly/flyctl/pkg/iostreams"
-	"github.com/superfly/flyctl/terminal"
+	"github.com/sammccord/flyctl/flyctl"
+	"github.com/sammccord/flyctl/helpers"
+	"github.com/sammccord/flyctl/internal/cmdfmt"
+	"github.com/sammccord/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/terminal"
 	"golang.org/x/sync/errgroup"
 )
 

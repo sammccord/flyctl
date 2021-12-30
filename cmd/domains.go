@@ -8,12 +8,12 @@ import (
 	"github.com/dustin/go-humanize"
 	"github.com/olekukonko/tablewriter"
 	"github.com/pkg/errors"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/cmd/presenters"
+	"github.com/sammccord/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/docstrings"
+	"github.com/sammccord/flyctl/internal/client"
 	"github.com/spf13/cobra"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/cmd/presenters"
-	"github.com/superfly/flyctl/cmdctx"
-	"github.com/superfly/flyctl/docstrings"
-	"github.com/superfly/flyctl/internal/client"
 )
 
 func newDomainsCommand(client *client.Client) *Command {

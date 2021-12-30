@@ -9,7 +9,7 @@ import (
 	"regexp"
 
 	"github.com/pkg/errors"
-	"github.com/superfly/flyctl/helpers"
+	"github.com/sammccord/flyctl/helpers"
 )
 
 //go:embed templates/** templates/**/.dockerignore

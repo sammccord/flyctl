@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/hashicorp/go-multierror"
-	"github.com/superfly/flyctl/api"
+	"github.com/sammccord/flyctl/api"
 )
 
 var ErrNoDeployment = errors.New("No deployment available to monitor")

@@ -4,10 +4,10 @@ import (
 	"fmt"
 
 	"github.com/pkg/errors"
-	"github.com/superfly/flyctl/internal/build/imgsrc/builtins"
-	"github.com/superfly/flyctl/internal/cmdfmt"
-	"github.com/superfly/flyctl/pkg/iostreams"
-	"github.com/superfly/flyctl/terminal"
+	"github.com/sammccord/flyctl/internal/build/imgsrc/builtins"
+	"github.com/sammccord/flyctl/internal/cmdfmt"
+	"github.com/sammccord/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/terminal"
 	"golang.org/x/net/context"
 )
 

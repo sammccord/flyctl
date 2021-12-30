@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/cmdctx"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/cmdctx"
 )
 
 //TODO: Move all output to status styled begin/done updates

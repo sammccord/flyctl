@@ -34,7 +34,7 @@ try {
 catch {
   $StatusCode = $_.Exception.Response.StatusCode.value__
   if ($StatusCode -eq 404) {
-    Write-Error "Unable to find a flyctl release on GitHub for version:$Version - see github.com/superfly/flyctl/releases for all versions"
+    Write-Error "Unable to find a flyctl release on GitHub for version:$Version - see github.com/sammccord/flyctl/releases for all versions"
   } else {
     $Request = $_.Exception
     Write-Error "Error while fetching releases: $Request"

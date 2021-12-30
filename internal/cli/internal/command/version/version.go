@@ -8,13 +8,13 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/superfly/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/pkg/iostreams"
 
-	"github.com/superfly/flyctl/internal/buildinfo"
-	"github.com/superfly/flyctl/internal/cli/internal/cache"
-	"github.com/superfly/flyctl/internal/cli/internal/command"
-	"github.com/superfly/flyctl/internal/cli/internal/config"
-	"github.com/superfly/flyctl/internal/cli/internal/flag"
+	"github.com/sammccord/flyctl/internal/buildinfo"
+	"github.com/sammccord/flyctl/internal/cli/internal/cache"
+	"github.com/sammccord/flyctl/internal/cli/internal/command"
+	"github.com/sammccord/flyctl/internal/cli/internal/config"
+	"github.com/sammccord/flyctl/internal/cli/internal/flag"
 )
 
 const saveInstallName = "saveinstall"

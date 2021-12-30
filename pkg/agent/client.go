@@ -10,11 +10,11 @@ import (
 
 	"github.com/blang/semver"
 	"github.com/pkg/errors"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/internal/buildinfo"
-	"github.com/superfly/flyctl/internal/wireguard"
-	"github.com/superfly/flyctl/pkg/wg"
-	"github.com/superfly/flyctl/terminal"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/internal/buildinfo"
+	"github.com/sammccord/flyctl/internal/wireguard"
+	"github.com/sammccord/flyctl/pkg/wg"
+	"github.com/sammccord/flyctl/terminal"
 )
 
 /// Establish starts the daemon if necessary and returns a client

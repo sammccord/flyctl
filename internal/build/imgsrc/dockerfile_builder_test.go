@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/sammccord/flyctl/flyctl"
+	"github.com/sammccord/flyctl/pkg/iostreams"
 	"github.com/stretchr/testify/assert"
-	"github.com/superfly/flyctl/flyctl"
-	"github.com/superfly/flyctl/pkg/iostreams"
 )
 
 func TestBuildDockerfileApp(t *testing.T) {

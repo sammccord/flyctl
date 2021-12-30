@@ -3,8 +3,8 @@ package resume
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/superfly/flyctl/internal/cli/internal/command"
-	"github.com/superfly/flyctl/internal/cli/internal/command/apps"
+	"github.com/sammccord/flyctl/internal/cli/internal/command"
+	"github.com/sammccord/flyctl/internal/cli/internal/command/apps"
 )
 
 // TODO: deprecate & remove

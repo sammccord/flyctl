@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/logrusorgru/aurora"
-	"github.com/superfly/flyctl/api"
+	"github.com/sammccord/flyctl/api"
 )
 
 type Allocations struct {

@@ -1,7 +1,7 @@
 package presenters
 
 import (
-	"github.com/superfly/flyctl/api"
+	"github.com/sammccord/flyctl/api"
 )
 
 // AllocationChecks - Holds check state for an allocation

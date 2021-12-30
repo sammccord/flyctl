@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/superfly/flyctl/api"
+	"github.com/sammccord/flyctl/api"
 )
 
 type WireGuardState struct {

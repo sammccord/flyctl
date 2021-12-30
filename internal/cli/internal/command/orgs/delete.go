@@ -6,10 +6,10 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/superfly/flyctl/internal/cli/internal/command"
-	"github.com/superfly/flyctl/internal/cli/internal/flag"
-	"github.com/superfly/flyctl/internal/cli/internal/prompt"
-	"github.com/superfly/flyctl/internal/client"
+	"github.com/sammccord/flyctl/internal/cli/internal/command"
+	"github.com/sammccord/flyctl/internal/cli/internal/flag"
+	"github.com/sammccord/flyctl/internal/cli/internal/prompt"
+	"github.com/sammccord/flyctl/internal/client"
 )
 
 func newDelete() *cobra.Command {

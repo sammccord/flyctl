@@ -10,12 +10,12 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/AlecAivazis/survey/v2/terminal"
 
-	"github.com/superfly/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/pkg/iostreams"
 
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/internal/cli/internal/config"
-	"github.com/superfly/flyctl/internal/cli/internal/sort"
-	"github.com/superfly/flyctl/internal/client"
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/internal/cli/internal/config"
+	"github.com/sammccord/flyctl/internal/cli/internal/sort"
+	"github.com/sammccord/flyctl/internal/client"
 )
 
 func String(ctx context.Context, dst *string, msg, def string, required bool) error {

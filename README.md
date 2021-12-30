@@ -44,7 +44,7 @@ curl -L https://fly.io/install.sh | sh -s 0.0.200
 
 ## Downloading from GitHub
 
-Download the appropriate version from the [Releases](https://github.com/superfly/flyctl/releases) page of the `flyctl` GitHub repository.
+Download the appropriate version from the [Releases](https://github.com/sammccord/flyctl/releases) page of the `flyctl` GitHub repository.
 
 ## Getting Started
 

@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/logrusorgru/aurora"
-	"github.com/superfly/flyctl/pkg/logs"
+	"github.com/sammccord/flyctl/pkg/logs"
 )
 
 type LogPresenter struct {

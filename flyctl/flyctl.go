@@ -7,10 +7,10 @@ import (
 	"path"
 	"path/filepath"
 
+	"github.com/sammccord/flyctl/api"
+	"github.com/sammccord/flyctl/helpers"
+	"github.com/sammccord/flyctl/terminal"
 	"github.com/spf13/viper"
-	"github.com/superfly/flyctl/api"
-	"github.com/superfly/flyctl/helpers"
-	"github.com/superfly/flyctl/terminal"
 	"gopkg.in/yaml.v2"
 )
 

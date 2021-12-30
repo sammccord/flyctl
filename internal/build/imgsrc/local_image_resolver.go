@@ -10,9 +10,9 @@ import (
 	dockerclient "github.com/docker/docker/client"
 	dockerparser "github.com/novln/docker-parser"
 	"github.com/pkg/errors"
-	"github.com/superfly/flyctl/internal/cmdfmt"
-	"github.com/superfly/flyctl/pkg/iostreams"
-	"github.com/superfly/flyctl/terminal"
+	"github.com/sammccord/flyctl/internal/cmdfmt"
+	"github.com/sammccord/flyctl/pkg/iostreams"
+	"github.com/sammccord/flyctl/terminal"
 )
 
 type localImageResolver struct{}

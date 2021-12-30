@@ -10,12 +10,12 @@ import (
 
 	"github.com/logrusorgru/aurora"
 	"github.com/pkg/errors"
+	"github.com/sammccord/flyctl/cmd/presenters"
+	"github.com/sammccord/flyctl/flyctl"
+	"github.com/sammccord/flyctl/internal/client"
+	"github.com/sammccord/flyctl/pkg/iostreams"
 	"github.com/segmentio/textio"
 	"github.com/spf13/cobra"
-	"github.com/superfly/flyctl/cmd/presenters"
-	"github.com/superfly/flyctl/flyctl"
-	"github.com/superfly/flyctl/internal/client"
-	"github.com/superfly/flyctl/pkg/iostreams"
 )
 
 // CmdContext - context passed to commands being run
