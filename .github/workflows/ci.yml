@@ -84,16 +84,16 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-go@v2
         with:
-          go-version: "1.17.x"
+          go-version: ${{ env.GO_VERSION }}
       - name: Get go version
         id: go-version
         run: echo "::set-output name=version::$(go env GOVERSION)"
-        - name: Docker Login
-          env:
-            DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-            DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-          run: |
-            echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
+      - name: Docker Login
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+        run: |
+          echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
       - uses: actions/cache@v2
         with:
           # In order:
