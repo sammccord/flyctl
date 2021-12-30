@@ -60,13 +60,13 @@ archives:
 release:
   prerelease: auto
 
-# dockers:
-#   - goos: linux
-#     goarch: amd64
-#     image_templates:
-#       - "flyio/flyctl:latest"
-#       - "flyio/flyctl:v{{ .Version }}"
-#     skip_push: auto
+dockers:
+  - goos: linux
+    goarch: amd64
+    image_templates:
+      - "sammccord/flyctl:latest"
+      - "sammccord/flyctl:v{{ .Version }}"
+    skip_push: auto
 
 checksum:
   name_template: "checksums.txt"
